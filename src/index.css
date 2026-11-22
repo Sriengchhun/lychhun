@@ -1,0 +1,280 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.invitation-cover {
+  display: grid;
+  min-height: 100vh;
+  min-height: 100svh;
+  place-items: center;
+  padding: clamp(1rem, 4vw, 2.5rem);
+  background: radial-gradient(ellipse at 50% 15%, #74353a, #3a111c 55%, #210c14);
+}
+
+.invitation-envelope {
+  --cover-gold: #E8C98A;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  container-type: inline-size;
+  width: min(100%, 23rem);
+  width: min(100%, 23rem, max(15rem, 38svh));
+  color: var(--cover-gold);
+  text-align: center;
+}
+
+.invitation-envelope__open,
+.invitation-envelope__guest {
+  grid-area: 1 / 1;
+  align-self: start;
+}
+
+.invitation-envelope__open {
+  display: block;
+  width: 100%;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+
+.invitation-envelope__artwork {
+  --flap-shape: polygon(
+    0 0, 100% 0, 100% 18.4%, 95% 20%, 93% 21.5%, 85% 24.4%, 76% 27.2%,
+    74% 29%, 65% 32.4%, 67% 35.5%, 67% 40%, 64% 43.8%, 60% 47.5%,
+    55% 49%, 45% 49%, 40% 47.5%, 36% 43.8%, 33% 40%, 33% 35.5%, 35% 32.4%,
+    26% 29%, 24% 27.2%, 15% 24.4%, 7% 21.5%, 5% 20%, 0 18.4%
+  );
+  position: relative;
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 1rem;
+  box-shadow: 0 1rem 3rem #13060bb0;
+}
+
+.invitation-envelope__artwork img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.invitation-envelope__lining,
+.invitation-envelope__flap {
+  position: absolute;
+  inset: 0;
+  clip-path: var(--flap-shape);
+}
+
+.invitation-envelope__lining {
+  background: linear-gradient(#2d0912 2%, #561323 34%);
+}
+
+.invitation-envelope__letter {
+  position: absolute;
+  inset: 5% 16% auto;
+  display: grid;
+  height: 45%;
+  justify-items: center;
+  padding-top: 8%;
+  border: 1px solid #c59b63;
+  border-radius: 0.35rem;
+  background: #fff4dc;
+  box-shadow: inset 0 0 0 0.25rem #fff4dc, inset 0 0 0 0.3rem #e1c188;
+  color: #94631e;
+  animation: invitation-letter-rise 540ms 160ms ease-out both;
+}
+
+.invitation-envelope__flap {
+  transform-origin: center top;
+  backface-visibility: hidden;
+  animation: invitation-flap-open 760ms cubic-bezier(0.32, 0.04, 0.24, 1) both;
+}
+
+@keyframes invitation-flap-open {
+  from { transform: perspective(50rem) rotateX(0); }
+  to { transform: perspective(50rem) rotateX(105deg); }
+}
+
+@keyframes invitation-letter-rise {
+  from { transform: translateY(105%); }
+  to { transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .invitation-envelope__letter,
+  .invitation-envelope__flap {
+    animation-duration: 1ms;
+    animation-delay: 0ms;
+  }
+}
+
+.invitation-envelope__open:focus-visible {
+  outline: 2px solid #ffe1a1;
+  outline-offset: 5px;
+}
+
+.invitation-envelope__guest {
+  position: relative;
+  min-width: 0;
+  margin: 110.7% 5% 0;
+  overflow-wrap: anywhere;
+  pointer-events: none;
+}
+
+.khmer-heading {
+  font-family: 'Moul', serif;
+  font-size: clamp(20px, 5vw, 34px);
+  font-weight: 400;
+  line-height: 1.8;
+  text-shadow: 0 -1px #fff0bd66, 1px 2px 4px #20070d;
+}
+
+.guest-name-en,
+.guest-name-km {
+  font-size: clamp(1rem, 6cqw, 1.5rem);
+  font-variant: normal;
+  text-transform: none;
+  text-shadow: 0 -1px #fff0bd38, 1px 2px 3px #21080c;
+}
+
+.guest-name-en {
+  font-family: 'Cinzel', serif;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.guest-name-km {
+  font-family: 'Noto Serif Khmer', serif;
+  font-weight: 700;
+  line-height: 1.8;
+}
+
+.invitation-envelope__divider {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.5rem;
+  width: 62%;
+  margin: 0.2rem auto 0.7rem;
+  font-size: 1.05rem;
+}
+
+.invitation-envelope__divider::before,
+.invitation-envelope__divider::after {
+  height: 2px;
+  background: linear-gradient(to right, transparent, #dfb86d);
+  filter: drop-shadow(0 1px 1px #23070c);
+  content: '';
+}
+
+.invitation-envelope__divider::after {
+  transform: scaleX(-1);
+}
+
+.invitation-envelope__divider--footer {
+  width: 31%;
+  margin: 0.75rem auto 0;
+  font-size: 0.8rem;
+}
+
+.invitation-envelope__guest-frame {
+  position: relative;
+  padding: clamp(0.62rem, 3.4cqw, 0.95rem) clamp(1.65rem, 10cqw, 2.5rem);
+  border: 4px double #d8b374;
+  border-radius: 1.1rem;
+  background: radial-gradient(ellipse at 50% 0%, #641b2a, #360e1a);
+  box-shadow: inset 0 0 0.8rem #21080f, 0 0.25rem 0.6rem #22070caa, 0 0 0.75rem #deb46730;
+}
+
+.invitation-envelope__guest-frame::before,
+.invitation-envelope__guest-frame::after {
+  position: absolute;
+  left: 50%;
+  width: 0.4rem;
+  height: 0.4rem;
+  border: 1px solid var(--cover-gold);
+  background: #641b2a;
+  transform: translateX(-50%) rotate(45deg);
+  content: '';
+}
+
+.invitation-envelope__guest-frame::before {
+  top: -0.3rem;
+}
+
+.invitation-envelope__guest-frame::after {
+  bottom: -0.3rem;
+}
+
+.invitation-envelope__frame-flower {
+  position: absolute;
+  top: 50%;
+  display: flex;
+  font-size: clamp(0.8rem, 4.5cqw, 1.1rem);
+}
+
+.invitation-envelope__frame-flower--left {
+  left: 0.4rem;
+  transform: translateY(-50%) rotate(-90deg);
+}
+
+.invitation-envelope__frame-flower--right {
+  right: 0.4rem;
+  transform: translateY(-50%) rotate(90deg);
+}
+
+.invitation-envelope__lotus {
+  position: relative;
+  display: inline-block;
+  width: 1.35em;
+  height: 0.95em;
+  filter: drop-shadow(0 1px 1px #28090d);
+}
+
+.invitation-envelope__lotus span,
+.invitation-envelope__lotus::before,
+.invitation-envelope__lotus::after {
+  position: absolute;
+  bottom: 0.05em;
+  left: 50%;
+  width: 0.44em;
+  height: 0.76em;
+  border: 1px solid currentColor;
+  border-radius: 65% 8% 65% 40%;
+  transform: translateX(-50%) rotate(-43deg);
+  transform-origin: 50% 100%;
+}
+
+.invitation-envelope__lotus::before,
+.invitation-envelope__lotus::after {
+  height: 0.64em;
+  content: '';
+}
+
+.invitation-envelope__lotus::before {
+  transform: translateX(-72%) rotate(-81deg);
+}
+
+.invitation-envelope__lotus::after {
+  transform: translateX(-28%) rotate(-5deg);
+}
+
+@layer components {
+  .text-gold {
+    color: #754b0a;
+  }
+
+  .text-gold-bright {
+    color: #fabd4f;
+  }
+
+  .text-gold-foil {
+    color: #754b0a;
+  }
+
+  @media (forced-colors: none) {
+    .text-gold-foil {
+      background-image: linear-gradient(105deg, #60400a, #926214 45%, #654109 75%, #875912);
+      background-clip: text;
+      color: transparent;
+    }
+  }
+}
