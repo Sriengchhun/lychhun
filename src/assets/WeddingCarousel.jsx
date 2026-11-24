@@ -1,7 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Play, Pause } from 'lucide-react';
 
-const WeddingCarousel = ({ photos = [], autoPlayInterval = 4000 }) => {
+import './WeddingCarousel.css';
+
+const thumbnailPositions = [11.02, 22.43, 33.86, 45.42, 57, 68.54, 80.05];
+
+const WeddingCarousel = ({ title, photos = [], autoPlayInterval = 4000 }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
@@ -25,108 +29,116 @@ const WeddingCarousel = ({ photos = [], autoPlayInterval = 4000 }) => {
 
       return () => clearInterval(interval);
     }
-  }, [isPlaying, isPaused, displayPhotos.length, autoPlayInterval]);
+  }, [isPlaying, isPaused, displayPhotos.length, autoPlayInterval, currentSlide]);
+
+  const pageSize = thumbnailPositions.length;
+  const pageCount = Math.ceil(displayPhotos.length / pageSize);
+  const page = Math.floor(currentSlide / pageSize);
+  const thumbnailStart = Math.min(page * pageSize, Math.max(0, displayPhotos.length - pageSize));
+  const thumbnails = displayPhotos.slice(thumbnailStart, thumbnailStart + pageSize);
+
+  const moveSlide = (direction) => {
+    setCurrentSlide((prev) => (prev + direction + displayPhotos.length) % displayPhotos.length);
+  };
+
+  const moveThumbnailPage = (direction) => {
+    setCurrentSlide(((page + direction + pageCount) % pageCount) * pageSize);
+  };
 
   return (
-    <div className="space-y-6">
-      {/* Main Image Display */}
-      <div 
-        className="relative h-[500px] md:h-[600px] lg:h-[700px] rounded-3xl overflow-hidden shadow-2xl border-4 border-purple-200"
+    <section className="wedding-gallery">
+      <h2 className="wedding-gallery__title font-serif text-center">{title}</h2>
+
+      <div
+        className="wedding-gallery__photo"
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
       >
         <img
           src={displayPhotos[currentSlide].url}
           alt={displayPhotos[currentSlide].alt}
-          className="w-full h-full object-cover transition-opacity duration-500"
+          className="w-full h-full object-contain"
         />
-        
-        {/* Previous Button */}
         <button
-          onClick={() => setCurrentSlide((prev) => (prev - 1 + displayPhotos.length) % displayPhotos.length)}
-          className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/60 hover:bg-white p-3 rounded-full shadow-lg transition-all hover:scale-110"
+          type="button"
+          onClick={() => moveSlide(-1)}
+          className="wedding-gallery__control absolute left-[3%] top-1/2 -translate-y-1/2"
           aria-label="Previous photo"
         >
-          <ChevronLeft className="text-purple-700" size={24} />
+          <ChevronLeft size={24} />
         </button>
-        
-        {/* Next Button */}
         <button
-          onClick={() => setCurrentSlide((prev) => (prev + 1) % displayPhotos.length)}
-          className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/60 hover:bg-white p-3 rounded-full shadow-lg transition-all hover:scale-110"
+          type="button"
+          onClick={() => moveSlide(1)}
+          className="wedding-gallery__control absolute right-[3%] top-1/2 -translate-y-1/2"
           aria-label="Next photo"
         >
-          <ChevronRight className="text-purple-700" size={24} />
+          <ChevronRight size={24} />
         </button>
-
-        {/* Play/Pause Button */}
         <button
-          onClick={() => setIsPlaying(!isPlaying)}
-          className="absolute top-4 right-4 bg-white/90 hover:bg-white p-2 rounded-full shadow-lg transition-all hover:scale-110"
+          type="button"
+          onClick={() => setIsPlaying((playing) => !playing)}
+          className="wedding-gallery__control absolute right-[3%] top-[3%]"
           aria-label={isPlaying ? 'Pause slideshow' : 'Play slideshow'}
         >
-          {isPlaying && !isPaused ? (
-            <Pause className="text-purple-700" size={20} />
-          ) : (
-            <Play className="text-purple-700" size={20} />
-          )}
+          {isPlaying ? <Pause size={20} /> : <Play size={20} />}
         </button>
-        
-        {/* Slide Counter */}
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 text-white px-4 py-2 rounded-full text-sm font-medium">
+
+        <div className="absolute bottom-[3%] left-1/2 -translate-x-1/2 bg-black/70 text-white px-3 py-1 rounded-full text-sm font-medium">
           {currentSlide + 1} / {displayPhotos.length}
         </div>
 
-        {/* Progress Bar */}
         {isPlaying && !isPaused && (
-          <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/30">
-            <div 
-              className="h-full bg-purple-500"
-              style={{
-                animation: `progress ${autoPlayInterval}ms linear`,
-                animationFillMode: 'forwards'
-              }}
+          <div className="absolute bottom-0 inset-x-0 h-1 bg-black/40">
+            <div
+              key={currentSlide}
+              className="wedding-gallery__progress"
+              style={{ animationDuration: `${autoPlayInterval}ms` }}
             />
           </div>
         )}
       </div>
 
-      {/* Thumbnail Strip */}
-      <div className="flex gap-3 overflow-x-auto pb-2 px-1 scrollbar-hide">
-        {displayPhotos.map((photo, idx) => (
-          <button
-            key={idx}
-            onClick={() => setCurrentSlide(idx)}
-            className={`flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden transition-all duration-300 ${
-              currentSlide === idx
-                ? 'ring-4 ring-purple-500 scale-110 shadow-lg'
-                : 'opacity-60 hover:opacity-100 hover:scale-105'
-            }`}
-            aria-label={`Go to photo ${idx + 1}`}
-          >
-            <img
-              src={photo.url}
-              alt={`Thumbnail ${idx + 1}`}
-              className="w-full h-full object-cover"
-            />
-          </button>
-        ))}
-      </div>
+      {thumbnails.map((photo, slot) => {
+        const index = thumbnailStart + slot;
 
-      <style>{`
-        @keyframes progress {
-          from { width: 0%; }
-          to { width: 100%; }
-        }
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-        }
-        .scrollbar-hide {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-      `}</style>
-    </div>
+        return (
+          <button
+            key={slot}
+            type="button"
+            className="wedding-gallery__thumbnail"
+            style={{ left: `${thumbnailPositions[slot]}%` }}
+            onClick={() => setCurrentSlide(index)}
+            aria-current={currentSlide === index ? 'true' : undefined}
+            aria-label={`Go to photo ${index + 1}`}
+          >
+            <img src={photo.url} alt="" className="w-full h-full object-cover" />
+          </button>
+        );
+      })}
+
+      {pageCount > 1 && (
+        <div className="absolute inset-x-0 top-[91.5%] -translate-y-1/2 flex items-center justify-center gap-3">
+          <button
+            type="button"
+            className="wedding-gallery__control"
+            onClick={() => moveThumbnailPage(-1)}
+            aria-label="Previous thumbnail page"
+          >
+            <ChevronLeft size={20} />
+          </button>
+          <span className="text-sm tabular-nums text-[#D4AF37]">{page + 1} / {pageCount}</span>
+          <button
+            type="button"
+            className="wedding-gallery__control"
+            onClick={() => moveThumbnailPage(1)}
+            aria-label="Next thumbnail page"
+          >
+            <ChevronRight size={20} />
+          </button>
+        </div>
+      )}
+    </section>
   );
 };
 

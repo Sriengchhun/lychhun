@@ -1,0 +1,81 @@
+.wedding-gallery {
+  --gallery-gold: #D4AF37;
+  position: relative;
+  container-type: inline-size;
+  margin-top: 20px;
+  aspect-ratio: 2702 / 3840;
+  background: #740d0b url('/assets/wedding-frame.png') center / 100% 100% no-repeat;
+}
+
+.wedding-gallery__title {
+  position: absolute;
+  inset: 4.2% 12% 89.8%;
+  display: grid;
+  place-items: center;
+  color: var(--gallery-gold);
+  font-size: clamp(0.875rem, 5cqi, 2rem);
+  line-height: 1.5;
+}
+
+.wedding-gallery__photo {
+  position: absolute;
+  inset: 16.68% 12.32% 22.76% 12.04%;
+  overflow: hidden;
+  border-radius: 4.1% / 3.6%;
+  background: #290c08;
+}
+
+.wedding-gallery__control {
+  display: grid;
+  place-items: center;
+  width: clamp(36px, 8cqi, 48px);
+  height: clamp(36px, 8cqi, 48px);
+  border-radius: 50%;
+  color: var(--gallery-gold);
+  background: #290c08e6;
+}
+
+.wedding-gallery__control:hover {
+  background: #491b13;
+}
+
+.wedding-gallery__control:focus-visible,
+.wedding-gallery__thumbnail:focus-visible {
+  outline: 2px solid white;
+  outline-offset: -4px;
+}
+
+.wedding-gallery__thumbnail {
+  position: absolute;
+  top: 80.14%;
+  width: 9.24%;
+  height: 7.76%;
+  border-radius: 17% / 14%;
+  overflow: hidden;
+}
+
+.wedding-gallery__thumbnail[aria-current='true']::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 3px var(--gallery-gold);
+  pointer-events: none;
+}
+
+.wedding-gallery__thumbnail:focus-visible {
+  z-index: 1;
+}
+
+.wedding-gallery__progress {
+  height: 100%;
+  background: var(--gallery-gold);
+  animation-name: wedding-gallery-progress;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes wedding-gallery-progress {
+  from { width: 0; }
+  to { width: 100%; }
+}

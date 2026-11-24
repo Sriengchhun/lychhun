@@ -1,0 +1,22 @@
+.wedding-frame {
+  --frame-gold: #D4AF37;
+  --frame-edge: clamp(24px, 7vw, 46px);
+  border: var(--frame-edge) solid #740d0b;
+  /* Each 450px corner maps to a square, while the edges and center scale independently. */
+  border-image: url('/assets/wedding-universal-frame.png') 450 fill stretch;
+  padding: clamp(0.75rem, 2vw, 1.25rem);
+  color: var(--frame-gold);
+  background-color: #740d0b;
+}
+
+.wedding-frame__time,
+.wedding-frame__button,
+.wedding-frame__qr-card {
+  border: 1px solid var(--frame-gold);
+  background-color: #540b0b;
+}
+
+.wedding-frame__button:focus-visible {
+  outline: 2px solid var(--frame-gold);
+  outline-offset: 4px;
+}
