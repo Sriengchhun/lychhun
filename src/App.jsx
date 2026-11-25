@@ -4,6 +4,8 @@ import WeddingCarousel from './assets/WeddingCarousel';
 import './wedding-frame.css';
 import guestData  from '../public/assets/names/guests';
 
+const publicAsset = (path) => `${import.meta.env.BASE_URL}assets/${path}`;
+
 // Intersection Observer for lazy animation
 const useInView = (ref, options = { threshold: 0.1, rootMargin: '100px' }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -40,29 +42,29 @@ const weddingInfo = {
 
 // Photo slideshow - replace with your actual photo URLs
 const photos = [
-  "/assets/DSC023591.jpg",
-  "/assets/DSC023761.jpg",
-  "/assets/DSC024031.jpg",
-  "/assets/DSC024361.jpg",
-  "/assets/DSC024571.jpg"
+  publicAsset('DSC023591.jpg'),
+  publicAsset('DSC023761.jpg'),
+  publicAsset('DSC024031.jpg'),
+  publicAsset('DSC024361.jpg'),
+  publicAsset('DSC024571.jpg')
 ];
 
   const weddingPhotos = [
-    { url: '/assets/iloveimg/IMG1.png', alt: 'Wedding ceremony' },
-    { url: '/assets/iloveimg/IMG2.png', alt: 'First dance' },
-    { url: '/assets/iloveimg/IMG3.png', alt: 'Exchange of vows' },
-    { url: '/assets/iloveimg/IMG4.png', alt: 'Wedding party' },
-    { url: '/assets/iloveimg/IMG5.png', alt: 'Reception' },
-    { url: '/assets/iloveimg/IMG6.jpg', alt: 'Reception' },
-    { url: '/assets/iloveimg/IMG7.jpg', alt: 'Reception' },
-    { url: '/assets/iloveimg/IMG8.jpg', alt: 'Reception' },
-    { url: '/assets/iloveimg/IMG9.jpg', alt: 'Reception' },
-    { url: '/assets/iloveimg/IMG10.jpg', alt: 'Reception' },
-    { url: '/assets/iloveimg/IMG11.jpg', alt: 'Reception' },
-    { url: '/assets/iloveimg/IMG12.jpg', alt: 'Reception' },
-    { url: '/assets/iloveimg/IMG13.jpg', alt: 'Reception' },
-    // { url: '/assets/iloveimg/IMG14.jpg', alt: 'Reception' },
-    // { url: '/assets/iloveimg/IMG1.png', alt: 'Couple portrait' },
+    { url: publicAsset('iloveimg/IMG1.png'), alt: 'Wedding ceremony' },
+    { url: publicAsset('iloveimg/IMG2.png'), alt: 'First dance' },
+    { url: publicAsset('iloveimg/IMG3.png'), alt: 'Exchange of vows' },
+    { url: publicAsset('iloveimg/IMG4.png'), alt: 'Wedding party' },
+    { url: publicAsset('iloveimg/IMG5.png'), alt: 'Reception' },
+    { url: publicAsset('iloveimg/IMG6.jpg'), alt: 'Reception' },
+    { url: publicAsset('iloveimg/IMG7.jpg'), alt: 'Reception' },
+    { url: publicAsset('iloveimg/IMG8.jpg'), alt: 'Reception' },
+    { url: publicAsset('iloveimg/IMG9.jpg'), alt: 'Reception' },
+    { url: publicAsset('iloveimg/IMG10.jpg'), alt: 'Reception' },
+    { url: publicAsset('iloveimg/IMG11.jpg'), alt: 'Reception' },
+    { url: publicAsset('iloveimg/IMG12.jpg'), alt: 'Reception' },
+    { url: publicAsset('iloveimg/IMG13.jpg'), alt: 'Reception' },
+    // { url: publicAsset('iloveimg/IMG14.jpg'), alt: 'Reception' },
+    // { url: publicAsset('iloveimg/IMG1.png'), alt: 'Couple portrait' },
   ];
 
 //   function Firefly() {
@@ -95,8 +97,8 @@ const Firefly = memo(({ delay, index }) => {
   );
 });
   const flowers = {
-    cherry: '/assets/flowers/4.webp',
-    blossom: '/assets/flowers/7.webp',
+    cherry: publicAsset('flowers/4.webp'),
+    blossom: publicAsset('flowers/7.webp'),
   };
 
   const Flower = memo(({ type }) => {
@@ -344,7 +346,7 @@ export default function WeddingInvitation() {
   }, []);
 
   const [audio] = useState(() => {
-    const a = new Audio('/assets/song.mp3');
+    const a = new Audio(publicAsset('song.mp3'));
     a.loop = true;
     a.volume = 0;
     return a;
@@ -439,7 +441,7 @@ const handleOpen = useCallback(() => {
 
   if (coverPhase !== 'opened') {
     const isOpening = coverPhase === 'opening';
-    const artwork = '/assets/invitation-envelope-cover.png';
+    const artwork = publicAsset('invitation-envelope-cover.png');
     const guestLanguage = /[\u1780-\u17FF]/.test(guestName) ? 'km' : 'en';
 
     return (
@@ -708,7 +710,7 @@ const handleOpen = useCallback(() => {
                   <div className="flex flex-col items-center">
                     <div className="wedding-frame__qr-card relative max-w-full rounded-2xl p-2 shadow-xl transform hover:scale-105 transition-transform duration-300">
                       <img 
-                        src="/assets/dollar.jpg"
+                        src={publicAsset('dollar.jpg')}
                         alt="Payment QR Code 1"
                         className="w-40 max-w-full h-auto rounded-xl"
                       />
@@ -727,7 +729,7 @@ const handleOpen = useCallback(() => {
                   <div className="flex flex-col items-center">
                     <div className="wedding-frame__qr-card relative max-w-full rounded-2xl p-2 shadow-xl transform hover:scale-105 transition-transform duration-300">
                       <img 
-                        src="/assets/riel.jpg"
+                        src={publicAsset('riel.jpg')}
                         alt="Payment QR Code 2"
                         className="w-40 max-w-full h-auto rounded-xl"
                       />
