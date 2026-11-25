@@ -4,7 +4,7 @@ import WeddingCarousel from './assets/WeddingCarousel';
 import './wedding-frame.css';
 import guestData  from '../public/assets/names/guests';
 
-const publicAsset = (path) => `${import.meta.env.BASE_URL}assets/${path}`;
+const publicAsset = (path) => `${import.meta.env.BASE_URL.replace(/\/$/, '')}/assets/${path}`;
 
 // Intersection Observer for lazy animation
 const useInView = (ref, options = { threshold: 0.1, rootMargin: '100px' }) => {
@@ -44,9 +44,9 @@ const weddingInfo = {
 const photos = [
   publicAsset('DSC023591.jpg'),
   publicAsset('DSC023761.jpg'),
-  publicAsset('DSC024031.jpg'),
-  publicAsset('DSC024361.jpg'),
-  publicAsset('DSC024571.jpg')
+  publicAsset('names/old/DSC024031.jpg'),
+  publicAsset('names/old/DSC024361.jpg'),
+  publicAsset('names/old/DSC024571.jpg')
 ];
 
   const weddingPhotos = [
