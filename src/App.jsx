@@ -46,24 +46,24 @@ const weddingSchedule = [
     title: 'កម្មវិធីទី១',
     date: 'ថ្ងៃសុក្រ ទី១៨ ខែធ្នូ ឆ្នាំ២០២៦',
     events: [
-      ['០៣:០០', 'ពិធីសែនក្រុងពាលី'],
-      ['០៤:០០', 'ពិធីសូត្រមន្តចម្រើនព្រះបរិត្ត'],
-      ['០៥:០០', 'ពិធីជុំបាយ និងចារទឹកស្លា'],
-      ['០៦:៣០', 'អញ្ជើញភ្ញៀវកិត្តិយសពិសាអាហារពេលល្ងាច'],
+      ['០៣:០០', 'រសៀល', 'ពិធីសែនក្រុងពាលី'],
+      ['០៤:០០', 'រសៀល', 'ពិធីសូត្រមន្តចម្រើនព្រះបរិត្ត'],
+      ['០៥:០០', 'ល្ងាច', 'ពិធីជុំបាយ និងចារទឹកស្លា'],
+      ['០៦:៣០', 'ល្ងាច', 'អញ្ជើញភ្ញៀវកិត្តិយសពិសាអាហារពេលល្ងាច'],
     ],
   },
   {
     title: 'កម្មវិធីទី២',
     date: 'ថ្ងៃសៅរ៍ ទី១៩ ខែធ្នូ ឆ្នាំ២០២៦',
     events: [
-      ['០៦:៣០', 'ជួបជុំភ្ញៀវកិត្តិយសដើម្បីរៀបចំហែជំនូន'],
-      ['០៧:០០', 'ពិធីហែជំនូនកំណត់ចូលរោងជ័យ'],
-      ['០៧:៣០', 'ពិធីចៅមហានិយាយជើងការ សែនព្រេន រៀបរាប់ផ្លែឈើ និងពិសាភោជនាហារពេលព្រឹក'],
-      ['០៨:០០', 'ពិធីបំពាក់ចិញ្ចៀន'],
-      ['០៩:០០', 'ពិធីកាត់សក់បង្កក់សិរី កូនប្រុស-កូនស្រី'],
-      ['១១:០០', 'ពិធីសំពះផ្ទឹម ចងដៃ បង្វិលពពិល និងព្រះថោងតោងស្បៃ'],
-      ['១២:០០', 'អញ្ជើញភ្ញៀវកិត្តិយសពិសាអាហារថ្ងៃត្រង់ បញ្ចប់កិច្ចអាពាហ៍ពិពាហ៍'],
-      ['០៥:០០', 'អញ្ជើញភ្ញៀវកិត្តិយសពិសាភោជនាហារ នៅគេហដ្ឋានខាងស្រី ដោយមេត្រីភាព។'],
+      ['០៦:៣០', 'ព្រឹក', 'ជួបជុំភ្ញៀវកិត្តិយសដើម្បីរៀបចំហែជំនូន'],
+      ['០៧:០០', 'ព្រឹក', 'ពិធីហែជំនូនកំណត់ចូលរោងជ័យ'],
+      ['០៧:៣០', 'ព្រឹក', 'ពិធីចៅមហានិយាយជើងការ សែនព្រេន រៀបរាប់ផ្លែឈើ និងពិសាភោជនាហារពេលព្រឹក'],
+      ['០៨:០០', 'ព្រឹក', 'ពិធីបំពាក់ចិញ្ចៀន'],
+      ['០៩:០០', 'ព្រឹក', 'ពិធីកាត់សក់បង្កក់សិរី កូនប្រុស-កូនស្រី'],
+      ['១១:០០', 'ព្រឹក', 'ពិធីសំពះផ្ទឹម ចងដៃ បង្វិលពពិល និងព្រះថោងតោងស្បៃ'],
+      ['១២:០០', 'ថ្ងៃត្រង់', 'អញ្ជើញភ្ញៀវកិត្តិយសពិសាអាហារថ្ងៃត្រង់ បញ្ចប់កិច្ចអាពាហ៍ពិពាហ៍'],
+      ['០៥:០០', 'ល្ងាច', 'អញ្ជើញភ្ញៀវកិត្តិយសពិសាភោជនាហារ នៅគេហដ្ឋានខាងស្រី ដោយមេត្រីភាព។'],
     ],
   },
 ];
@@ -429,7 +429,7 @@ const toggleMusic = useCallback(() => {
   useEffect(() => {
     if (coverPhase !== 'opening') return;
 
-    const timeout = window.setTimeout(finishOpening, 1000);
+    const timeout = window.setTimeout(finishOpening, 1550);
     return () => window.clearTimeout(timeout);
   }, [coverPhase, finishOpening]);
 
@@ -460,7 +460,7 @@ const handleOpen = useCallback(() => {
 
   if (coverPhase !== 'opened') {
     const isOpening = coverPhase === 'opening';
-    const artwork = publicAsset('invitation-envelope-cover.png');
+    const artwork = publicAsset('invitation-envelope-cover.webp');
     const guestLanguage = /[\u1780-\u17FF]/.test(guestName) ? 'km' : 'en';
 
     return (
@@ -475,13 +475,13 @@ const handleOpen = useCallback(() => {
             disabled={isOpening}
           >
             <span className="invitation-envelope__artwork" aria-hidden="true">
-              <img src={artwork} alt="" width={851} height={1847} />
+              <img src={artwork} alt="" width={851} height={1847} fetchPriority="high" />
               {isOpening && (
                 <>
                   <span className="invitation-envelope__lining">
                     <span className="invitation-envelope__letter">
                       <Heart size={18} />
-                      <img src={`${import.meta.env.BASE_URL}wedding-couple-icon.png`} alt="" />
+                      <img src={publicAsset('khmer-wedding-couple-portrait.webp')} alt="" width={1024} height={1535} />
                     </span>
                   </span>
                   <img
@@ -618,10 +618,11 @@ const handleOpen = useCallback(() => {
                 <div className="mx-auto mt-2 h-1 w-16 rounded-full bg-current" aria-hidden="true" />
               </header>
               <ul className="space-y-4">
-                {events.map(([time, description]) => (
+                {events.map(([time, period, description]) => (
                   <li key={time} className="group flex items-center gap-3 sm:gap-4">
-                    <div className="wedding-frame__time flex h-14 w-14 shrink-0 items-center justify-center rounded-full font-semibold shadow-md transition-transform duration-500 ease-out group-hover:scale-110 sm:h-16 sm:w-16">
+                    <div className="wedding-frame__time flex h-14 w-14 shrink-0 flex-col items-center justify-center rounded-full font-semibold shadow-md transition-transform duration-500 ease-out group-hover:scale-110 sm:h-16 sm:w-16">
                       <span className="text-base drop-shadow-sm">{time}</span>
+                      <span className="whitespace-nowrap text-[10px] leading-normal sm:text-xs">{period}</span>
                     </div>
                     <p className="min-w-0 break-words font-semibold leading-loose sm:text-lg">{description}</p>
                   </li>
