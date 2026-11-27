@@ -3,8 +3,8 @@
   position: relative;
   container-type: inline-size;
   margin-top: 20px;
-  aspect-ratio: 2702 / 3840;
-  background: #740d0b url('/assets/wedding-frame.png') center / 100% 100% no-repeat;
+  aspect-ratio: 1055 / 1491;
+  background: #740d0b url('/assets/ornate-gallery-frame.webp') center / 100% 100% no-repeat;
 }
 
 .wedding-gallery__title {
@@ -19,7 +19,7 @@
 
 .wedding-gallery__photo {
   position: absolute;
-  inset: 16.68% 12.32% 22.76% 12.04%;
+  inset: 16.7% 12.25% 22.47% 12.15%;
   overflow: hidden;
   border-radius: 4.1% / 3.6%;
   background: #290c08;
@@ -47,9 +47,9 @@
 
 .wedding-gallery__thumbnail {
   position: absolute;
-  top: 80.14%;
-  width: 9.24%;
-  height: 7.76%;
+  top: 80.22%;
+  width: 9.2%;
+  height: 7.91%;
   border-radius: 17% / 14%;
   overflow: hidden;
 }

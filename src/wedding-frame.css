@@ -6,7 +6,8 @@
 }
 
 .wedding-frame__cover-name,
-.wedding-frame__date {
+.wedding-frame__date,
+.wedding-gallery__title {
   font-family: 'Khmer OS Muol Light', ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
 }
 

@@ -83,6 +83,7 @@ const photos = [
     { url: publicAsset('iloveimg/IMG12.jpg'), alt: 'Reception' },
     { url: publicAsset('iloveimg/IMG13.jpg'), alt: 'Reception' },
     { url: publicAsset('iloveimg/IMG14.jpg'), alt: 'Reception' },
+    { url: publicAsset('iloveimg/IMG15.jpg'), alt: 'Wedding couple in traditional Khmer attire' },
   ];
 
 //   function Firefly() {
@@ -429,7 +430,7 @@ const toggleMusic = useCallback(() => {
   useEffect(() => {
     if (coverPhase !== 'opening') return;
 
-    const timeout = window.setTimeout(finishOpening, 1550);
+    const timeout = window.setTimeout(finishOpening, 1650);
     return () => window.clearTimeout(timeout);
   }, [coverPhase, finishOpening]);
 

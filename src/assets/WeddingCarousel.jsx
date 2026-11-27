@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight, Play, Pause } from 'lucide-react';
 
 import './WeddingCarousel.css';
 
-const thumbnailPositions = [11.02, 22.43, 33.86, 45.42, 57, 68.54, 80.05];
+const thumbnailPositions = [10.93, 22.4, 33.87, 45.53, 57, 68.66, 80.13];
 
 const WeddingCarousel = ({ title, photos = [], autoPlayInterval = 4000 }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -47,7 +47,7 @@ const WeddingCarousel = ({ title, photos = [], autoPlayInterval = 4000 }) => {
 
   return (
     <section className="wedding-gallery">
-      <h2 className="wedding-gallery__title font-serif text-center">{title}</h2>
+      <h2 className="wedding-gallery__title font-normal text-center">{title}</h2>
 
       <div
         className="wedding-gallery__photo"
