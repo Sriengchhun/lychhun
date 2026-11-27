@@ -1,3 +1,15 @@
+/* Khmer OS Muol Light by Danh Hong and Open Forum of Cambodia, LGPL-3.0. */
+@font-face {
+  font-family: 'Khmer OS Muol Light';
+  src: url('/assets/KhmerOS_muollight.ttf') format('truetype');
+  font-display: swap;
+}
+
+.wedding-frame__cover-name,
+.wedding-frame__date {
+  font-family: 'Khmer OS Muol Light', ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+}
+
 .wedding-frame {
   --frame-gold: #D4AF37;
   --frame-edge: clamp(24px, 7vw, 46px);
@@ -16,7 +28,8 @@
   background-color: #540b0b;
 }
 
-.wedding-frame__button:focus-visible {
+.wedding-frame__button:focus-visible,
+.wedding-frame__qr-card:focus-visible {
   outline: 2px solid var(--frame-gold);
   outline-offset: 4px;
 }

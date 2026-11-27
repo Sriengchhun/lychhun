@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef, memo } from 'react';
-import { Music, MapPin, Calendar, Heart, Sparkles, Phone } from 'lucide-react';
+import { Music, MapPin, Calendar, Heart, Sparkles, Phone, X } from 'lucide-react';
 import WeddingCarousel from './assets/WeddingCarousel';
 import './wedding-frame.css';
 import guestData  from '../public/assets/names/guests';
 
 const publicAsset = (path) => `${import.meta.env.BASE_URL.replace(/\/$/, '')}/assets/${path}`;
+const giftQrUrl = publicAsset('dollar.jpg');
 
 // Intersection Observer for lazy animation
 const useInView = (ref, options = { threshold: 0.1, rootMargin: '100px' }) => {
@@ -32,39 +33,56 @@ const useInView = (ref, options = { threshold: 0.1, rootMargin: '100px' }) => {
 const weddingInfo = {
   bride: "សុបញ្ញា",
   groom: "លីឈុន",
-  date: "២៨ កុម្ភៈ ២០២៦",
+  date: "១៩ ខែធ្នូ ឆ្នាំ២០២៦",
   time: "០៥:00 ល្ងាច",
-  venue: "ភោជនីយដ្ឋាន វិមានពរជ័យ",
-  address: "ក្រុងបាត់ដំបង",
+  locationUrl: "https://maps.app.goo.gl/camYwuWrNu7mEyTg8?g_st=it",
+  locationCoordinates: "12.0433458,105.6783009",
   ceremony: "5:00 PM",
   reception: "7:00 PM"
 };
+
+const weddingSchedule = [
+  {
+    title: 'កម្មវិធីទី១',
+    date: 'ថ្ងៃសុក្រ ទី១៨ ខែធ្នូ ឆ្នាំ២០២៦',
+    events: [
+      ['០៣:០០', 'ពិធីសែនក្រុងពាលី'],
+      ['០៤:០០', 'ពិធីសូត្រមន្តចម្រើនព្រះបរិត្ត'],
+      ['០៥:០០', 'ពិធីជុំបាយ និងចារទឹកស្លា'],
+      ['០៦:៣០', 'អញ្ជើញភ្ញៀវកិត្តិយសពិសាអាហារពេលល្ងាច'],
+    ],
+  },
+  {
+    title: 'កម្មវិធីទី២',
+    date: 'ថ្ងៃសៅរ៍ ទី១៩ ខែធ្នូ ឆ្នាំ២០២៦',
+    events: [
+      ['០៦:៣០', 'ជួបជុំភ្ញៀវកិត្តិយសដើម្បីរៀបចំហែជំនូន'],
+      ['០៧:០០', 'ពិធីហែជំនូនកំណត់ចូលរោងជ័យ'],
+      ['០៧:៣០', 'ពិធីចៅមហានិយាយជើងការ សែនព្រេន រៀបរាប់ផ្លែឈើ និងពិសាភោជនាហារពេលព្រឹក'],
+      ['០៨:០០', 'ពិធីបំពាក់ចិញ្ចៀន'],
+      ['០៩:០០', 'ពិធីកាត់សក់បង្កក់សិរី កូនប្រុស-កូនស្រី'],
+      ['១១:០០', 'ពិធីសំពះផ្ទឹម ចងដៃ បង្វិលពពិល និងព្រះថោងតោងស្បៃ'],
+      ['១២:០០', 'អញ្ជើញភ្ញៀវកិត្តិយសពិសាអាហារថ្ងៃត្រង់ បញ្ចប់កិច្ចអាពាហ៍ពិពាហ៍'],
+      ['០៥:០០', 'អញ្ជើញភ្ញៀវកិត្តិយសពិសាភោជនាហារ នៅគេហដ្ឋានខាងស្រី ដោយមេត្រីភាព។'],
+    ],
+  },
+];
 
 // Photo slideshow - replace with your actual photo URLs
 const photos = [
   publicAsset('DSC023591.jpg'),
   publicAsset('DSC023761.jpg'),
-  publicAsset('names/old/DSC024031.jpg'),
-  publicAsset('names/old/DSC024361.jpg'),
-  publicAsset('names/old/DSC024571.jpg')
+  publicAsset('DSC024031.jpg'),
+  publicAsset('DSC024361.jpg')
 ];
 
   const weddingPhotos = [
-    { url: publicAsset('iloveimg/IMG1.png'), alt: 'Wedding ceremony' },
-    { url: publicAsset('iloveimg/IMG2.png'), alt: 'First dance' },
-    { url: publicAsset('iloveimg/IMG3.png'), alt: 'Exchange of vows' },
-    { url: publicAsset('iloveimg/IMG4.png'), alt: 'Wedding party' },
-    { url: publicAsset('iloveimg/IMG5.png'), alt: 'Reception' },
-    { url: publicAsset('iloveimg/IMG6.jpg'), alt: 'Reception' },
-    { url: publicAsset('iloveimg/IMG7.jpg'), alt: 'Reception' },
-    { url: publicAsset('iloveimg/IMG8.jpg'), alt: 'Reception' },
     { url: publicAsset('iloveimg/IMG9.jpg'), alt: 'Reception' },
     { url: publicAsset('iloveimg/IMG10.jpg'), alt: 'Reception' },
     { url: publicAsset('iloveimg/IMG11.jpg'), alt: 'Reception' },
     { url: publicAsset('iloveimg/IMG12.jpg'), alt: 'Reception' },
     { url: publicAsset('iloveimg/IMG13.jpg'), alt: 'Reception' },
-    // { url: publicAsset('iloveimg/IMG14.jpg'), alt: 'Reception' },
-    // { url: publicAsset('iloveimg/IMG1.png'), alt: 'Couple portrait' },
+    { url: publicAsset('iloveimg/IMG14.jpg'), alt: 'Reception' },
   ];
 
 //   function Firefly() {
@@ -307,6 +325,7 @@ export default function WeddingInvitation() {
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
   const [showMap, setShowMap] = useState(false);
   const [showGifts, setShowGifts] = useState(false);
+  const giftQrDialog = useRef(null);
 
   useEffect(() => {
     const style = document.createElement('style');
@@ -462,6 +481,7 @@ const handleOpen = useCallback(() => {
                   <span className="invitation-envelope__lining">
                     <span className="invitation-envelope__letter">
                       <Heart size={18} />
+                      <img src={`${import.meta.env.BASE_URL}wedding-couple-icon.png`} alt="" />
                     </span>
                   </span>
                   <img
@@ -544,12 +564,12 @@ const handleOpen = useCallback(() => {
         
         <section className="wedding-frame text-center">
           <Heart className="w-16 h-16 mx-auto mb-4" />
-          <h1 className="text-5xl md:text-6xl font-serif mb-2 relative py-2">
-            {weddingInfo.bride}
+          <h1 className="text-5xl md:text-6xl wedding-frame__cover-name mb-2 relative py-2">
+            {weddingInfo.groom}
           </h1>
           <p className="text-3xl md:text-4xl my-4">&</p>
-          <h1 className="text-5xl md:text-6xl font-serif mb-6 relative py-2">
-            {weddingInfo.groom}
+          <h1 className="text-5xl md:text-6xl wedding-frame__cover-name mb-6 relative py-2">
+            {weddingInfo.bride}
           </h1>
           <div className="w-32 h-1 bg-gradient-to-r from-transparent via-current to-transparent mx-auto my-6 rounded-full"></div>
           <p className="text-2xl font-bold">
@@ -577,80 +597,39 @@ const handleOpen = useCallback(() => {
             <h2 className="text-3xl font-serif font-bold text-center relative py-2 leading-relaxed">កាលបរិច្ឆេទ</h2>
           </div>
           <div className="text-center relative">
-            <p className="text-3xl font-bold mb-2 py-2">{weddingInfo.date}</p>
+            <p className="wedding-frame__date text-3xl font-normal mb-2 py-2">{weddingInfo.date}</p>
             </div>
         </section>
 
-        <section className="wedding-frame mt-5">
+        <section className="wedding-frame mt-5" lang="km">
           <h2 className="text-3xl font-serif font-bold text-center relative py-2 leading-relaxed">
             កម្មវិធីមង្គលអាពាហ៍ពិពាហ៍
           </h2>
-          <div className="text-center mb-8">
-            <div className="flex items-center justify-center gap-3 mb-1">
-              <span className="text-xs">✦</span>
-              <span className="text-xl">❀</span>
-              <span className="text-xs">✦</span>
-            </div>
-            <h2 className="text-2xl font-bold leading-relaxed">
-              ព្រឹក
-            </h2>
-            <div className="w-16 h-1 bg-current mx-auto mt-2 rounded-full"></div>
-          </div>
-          <div className="space-y-4 relative">
-            {[
-              { time: '០៥:៣០', title: 'ពិធីសំពះពិលា', desc: '' },
-              { time: '០៧:០០', title: 'ពិធីហែជំនូន', desc: '' },
-              { time: '០៩:០០', title: 'ពិធីលេីកផ្កាស្លា និងបំពាក់ចិញ្ចៀន', desc: '' },
-              { time: '១០:០០', title: 'ពិធីកាត់សក់បង្កក់សិរី', desc: '' },
-              { time: '១១:០០', title: 'អញ្ជេីញភ្ញៀវពិសារអាហារថ្ងៃត្រង់', desc: '' }
-            ].map((event, idx) => (
-              <div key={idx} className="flex items-start group">
-                <div
-                  className="wedding-frame__time rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center font-semibold mr-3 sm:mr-4 flex-shrink-0 shadow-md group-hover:scale-110 transition-transform duration-500 ease-out"
-                >
-                  <span className="text-sm drop-shadow-sm">
-                    {event.time}
-                  </span>
+          {weddingSchedule.map(({ title, date, events }) => (
+            <section key={title} className="mt-8 first-of-type:mt-4">
+              <header className="mb-5 text-center sm:mb-7">
+                <div className="mb-1 flex items-center justify-center gap-3" aria-hidden="true">
+                  <span className="text-xs">✦</span>
+                  <span className="text-xl">❀</span>
+                  <span className="text-xs">✦</span>
                 </div>
-                <div>
-                  <h3 className="font-semibold text-lg py-4">{event.title}</h3>
-                  <p>{event.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="text-center mb-8">
-            <div className="flex items-center justify-center gap-3 mb-1">
-              <span className="text-xs">✦</span>
-              <span className="text-xl">❀</span>
-              <span className="text-xs">✦</span>
-            </div>
-            <h2 className="text-2xl font-bold leading-relaxed">
-              រសៀល
-            </h2>
-            <div className="w-16 h-1 bg-current mx-auto mt-2 rounded-full"></div>
-          </div>
-          <div className="space-y-4 relative">
-            {[
-              { time: '០១:០០', title: 'ពិធីសំពះផ្ទឹម សែនចងដៃ បង្វិលពពិល និងព្រះថោងនាងនាគ', desc: '' },
-              { time: '០២:០០', title: 'ពិធីសូត្រមន្ដចម្រេីនព្រះបរិត្ត', desc: '' },
-              { time: '០៥:០០', title: 'អញ្ជេីញភ្ញៀវពិសារភោជនាហារនៅ ភោជនីយដ្ឋាន វិមានពរជ័យ', desc: '' },
-            ].map((event, idx) => (
-              <div key={idx} className="flex items-start group">
-                <div 
-                  className="wedding-frame__time rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center font-semibold mr-3 sm:mr-4 flex-shrink-0 shadow-md group-hover:scale-110 transition-transform duration-500 ease-out"
-                >
-                  <span className="text-sm drop-shadow-sm">
-                    {event.time}
-                  </span>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-lg py-2">{event.title}</h3>
-                  <p>{event.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+                <h3 className="text-2xl font-bold leading-relaxed">{title}</h3>
+                <p className="mt-1 break-words text-base font-semibold leading-loose sm:text-lg">{date}</p>
+                <div className="mx-auto mt-2 h-1 w-16 rounded-full bg-current" aria-hidden="true" />
+              </header>
+              <ul className="space-y-4">
+                {events.map(([time, description]) => (
+                  <li key={time} className="group flex items-center gap-3 sm:gap-4">
+                    <div className="wedding-frame__time flex h-14 w-14 shrink-0 items-center justify-center rounded-full font-semibold shadow-md transition-transform duration-500 ease-out group-hover:scale-110 sm:h-16 sm:w-16">
+                      <span className="text-base drop-shadow-sm">{time}</span>
+                    </div>
+                    <p className="min-w-0 break-words font-semibold leading-loose sm:text-lg">{description}</p>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
+          <p className="khmer-heading mt-8 text-center">សូមអរគុណ</p>
         </section>
 
         <section className="wedding-frame mt-5">
@@ -658,29 +637,29 @@ const handleOpen = useCallback(() => {
             <MapPin className="w-8 h-8 mr-3" />
             <h2 className="text-3xl font-serif font-bold text-center relative py-2 leading-relaxed">ទីតាំង</h2>
           </div>
-          <div className="text-center relative">
-            <p className="text-2xl font-semibold mb-2">{weddingInfo.venue}</p>
-            <p className="mb-4">{weddingInfo.address}</p>
+          <div className="relative flex flex-col items-center gap-4 text-center">
+            <a className="font-semibold underline" href={weddingInfo.locationUrl}>
+              បើកក្នុង Google Maps
+            </a>
             {!showMap && (
-              <div className="mb-6 flex justify-center">
-                <img 
-                  src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://www.google.com/maps/search/Vimean+Pochey/@13.083209,103.2096964,15z"
-                  alt="Map QR Code"
-                  className="w-48 max-w-full aspect-square border-4 border-current rounded-lg shadow-lg bg-white p-2"
-                />
-              </div>
+              <img
+                src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(weddingInfo.locationUrl)}`}
+                alt="Map QR Code"
+                className="mb-2 w-48 max-w-full aspect-square border-4 border-current rounded-lg shadow-lg bg-white p-2"
+              />
             )}
             <button
               onClick={() => setShowMap(!showMap)}
               aria-expanded={showMap}
-              className="wedding-frame__button px-8 py-3 rounded-full hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+              className="wedding-frame__button px-8 py-3 rounded-full hover:shadow-xl transform aria-expanded:translate-x-2 hover:scale-105 transition-all duration-300"
             >
               {showMap ? 'Hide Map' : 'View Map'}
             </button>
             {showMap && (
-              <div className="mt-6 rounded-2xl overflow-hidden border-4 border-current shadow-xl relative">
+              <div className="mt-2 w-full rounded-2xl overflow-hidden border-4 border-current shadow-xl relative">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.251994908542!2d103.2096964!3d13.083209499999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x310549a2c47f8917%3A0xc3a428a914f8a68e!2sVimean%20Pochey!5e0!3m2!1sen!2sjp!4v1769324541125!5m2!1sen!2sjp"
+                  title="Wedding location map"
+                  src={`https://www.google.com/maps?q=${encodeURIComponent(weddingInfo.locationCoordinates)}&z=16&output=embed`}
                   style={{ border: 0, width: '100%', height: '400px', display: 'block' }}
                   allowFullScreen=""
                   loading="lazy"
@@ -704,42 +683,47 @@ const handleOpen = useCallback(() => {
             </button>
             
             {showGifts && (
-              <div className="mt-10 space-y-8">
-                <div className="flex flex-col md:flex-row justify-center gap-8 items-stretch">
-                  {/* QR Code 1 */}
-                  <div className="flex flex-col items-center">
-                    <div className="wedding-frame__qr-card relative max-w-full rounded-2xl p-2 shadow-xl transform hover:scale-105 transition-transform duration-300">
-                      <img 
-                        src={publicAsset('dollar.jpg')}
-                        alt="Payment QR Code 1"
-                        className="w-40 max-w-full h-auto rounded-xl"
-                      />
-                    </div>
-                    <p className="font-semibold mt-4 text-sm">
-                      ប្រាក់ដុល្លា (USD)
-                    </p>
-                  </div>
-                  
-                  {/* Decorative Divider */}
-                  <div className="hidden md:flex items-center">
-                    <div className="h-48 w-1 bg-gradient-to-b from-transparent via-current to-transparent"></div>
-                  </div>
-                  
-                  {/* QR Code 2 */}
-                  <div className="flex flex-col items-center">
-                    <div className="wedding-frame__qr-card relative max-w-full rounded-2xl p-2 shadow-xl transform hover:scale-105 transition-transform duration-300">
-                      <img 
-                        src={publicAsset('riel.jpg')}
-                        alt="Payment QR Code 2"
-                        className="w-40 max-w-full h-auto rounded-xl"
-                      />
-                    </div>
-                    <p className="font-semibold mt-4 text-sm">
-                      ប្រាក់រៀល (KHR)
-                    </p>
-                  </div>
-                </div>
-              </div>
+              <figure className="mt-10 flex flex-col items-center">
+                <button
+                  type="button"
+                  onClick={() => giftQrDialog.current.showModal()}
+                  aria-haspopup="dialog"
+                  aria-label="Enlarge ABA payment QR code"
+                  className="wedding-frame__qr-card relative max-w-full cursor-zoom-in rounded-2xl p-2 shadow-xl transform hover:scale-105 transition-transform duration-300"
+                >
+                  <img
+                    src={giftQrUrl}
+                    alt="ABA payment QR code"
+                    className="w-40 max-w-full h-auto rounded-xl"
+                  />
+                </button>
+                <figcaption className="font-semibold mt-4 text-sm">
+                  ប្រាក់រៀល (KHR)/ប្រាក់ដុល្លា (USD)
+                </figcaption>
+                <dialog
+                  ref={giftQrDialog}
+                  aria-label="ABA payment QR code"
+                  className="m-auto max-h-none max-w-none overflow-visible rounded-2xl bg-transparent p-0 backdrop:bg-black/80"
+                  onClick={(event) => {
+                    if (event.target === event.currentTarget) event.currentTarget.close();
+                  }}
+                >
+                  <form method="dialog">
+                    <button
+                      type="submit"
+                      aria-label="Close enlarged QR code"
+                      className="wedding-frame__button absolute right-2 top-2 flex h-10 w-10 items-center justify-center rounded-full text-gold"
+                    >
+                      <X className="h-5 w-5" aria-hidden="true" />
+                    </button>
+                  </form>
+                  <img
+                    src={giftQrUrl}
+                    alt="ABA payment QR code"
+                    className="max-h-[85dvh] max-w-[90vw] rounded-2xl"
+                  />
+                </dialog>
+              </figure>
             )}
           </div>
         </section>
@@ -775,7 +759,7 @@ const handleOpen = useCallback(() => {
           <div className="mt-6 relative">
             <p className="text-sm">With love,</p>
             <p className="text-2xl font-serif mt-2">
-              {weddingInfo.bride} & {weddingInfo.groom}
+              {weddingInfo.groom} & {weddingInfo.bride}
             </p>
           </div>
         </section>
@@ -792,19 +776,19 @@ const handleOpen = useCallback(() => {
             <div className="max-w-md mx-auto">
               <div className="flex justify-center items-center gap-2 sm:gap-8">
                 <a 
-                  href="tel:+85599940114"
+                  href="tel:+855977534943"
                   className="whitespace-nowrap hover:underline text-sm sm:text-lg font-medium transition-colors duration-300"
                 >
-                  099 940 114
+                  097 753 4943
                 </a>
                 
                 <div className="h-8 w-px shrink-0 bg-current"></div>
                 
                 <a 
-                  href="tel:+85589856764"
+                  href="tel:+85570622071"
                   className="whitespace-nowrap hover:underline text-sm sm:text-lg font-medium transition-colors duration-300"
                 >
-                  089 856 764
+                  070 622 071
                 </a>
               </div>
             </div>
