@@ -595,7 +595,7 @@ const handleOpen = useCallback(() => {
         <section className="wedding-frame mt-5">
           <div className="flex items-center justify-center relative">
             <Calendar className="w-8 h-8 mr-3" />
-            <h2 className="text-3xl font-serif font-bold text-center relative py-2 leading-relaxed">កាលបរិច្ឆេទ</h2>
+            <h2 className="wedding-frame__heading text-3xl font-normal text-center relative py-2 leading-relaxed">កាលបរិច្ឆេទ</h2>
           </div>
           <div className="text-center relative">
             <p className="wedding-frame__date text-3xl font-normal mb-2 py-2">{weddingInfo.date}</p>
@@ -603,7 +603,7 @@ const handleOpen = useCallback(() => {
         </section>
 
         <section className="wedding-frame mt-5" lang="km">
-          <h2 className="text-3xl font-serif font-bold text-center relative py-2 leading-relaxed">
+          <h2 className="wedding-frame__heading text-3xl font-normal text-center relative py-2 leading-relaxed">
             កម្មវិធីមង្គលអាពាហ៍ពិពាហ៍
           </h2>
           {weddingSchedule.map(({ title, date, events }) => (
@@ -637,7 +637,7 @@ const handleOpen = useCallback(() => {
         <section className="wedding-frame mt-5">
           <div className="flex items-center justify-center mb-4 relative">
             <MapPin className="w-8 h-8 mr-3" />
-            <h2 className="text-3xl font-serif font-bold text-center relative py-2 leading-relaxed">ទីតាំង</h2>
+            <h2 className="wedding-frame__heading text-3xl font-normal text-center relative py-2 leading-relaxed">ទីតាំង</h2>
           </div>
           <div className="relative flex flex-col items-center gap-4 text-center">
             <a className="font-semibold underline" href={weddingInfo.locationUrl}>
@@ -673,7 +673,7 @@ const handleOpen = useCallback(() => {
 
         <section className="wedding-frame mt-5">
           <div className="text-center relative">
-            <h2 className="text-3xl font-serif font-bold text-center relative py-2 leading-relaxed">
+            <h2 className="wedding-frame__heading text-3xl font-normal text-center relative py-2 leading-relaxed">
               ចំណងដៃ
             </h2>
             <button
@@ -770,7 +770,7 @@ const handleOpen = useCallback(() => {
           <div className="text-center relative">
             <div className="flex items-center justify-center mb-10">
               <Phone className="w-8 h-8 mr-3" />
-              <h2 className="text-3xl font-serif font-bold text-center relative py-2 leading-relaxed">
+              <h2 className="wedding-frame__heading text-3xl font-normal text-center relative py-2 leading-relaxed">
                 ទំនាក់ទំនង
               </h2>
             </div>
